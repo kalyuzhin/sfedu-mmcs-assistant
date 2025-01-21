@@ -1,10 +1,4 @@
-from openai import OpenAI
-from shared.core.config import settings
-
-client = OpenAI(
-    base_url=settings.ENDPOINT,
-    api_key=settings.API_TOKEN,
-)
+from shared.api import client, settings
 
 
 def make_query(query: str, context: str = None):

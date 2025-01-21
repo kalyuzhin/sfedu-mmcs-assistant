@@ -14,5 +14,7 @@ class Settings(BaseSettings):
 
     MODEL_NAME: str = "gpt-4o-mini"
 
+    EMBEDDING_MODEL: str = "text-embedding-3-small"
+
 
 settings = Settings()

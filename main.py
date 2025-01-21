@@ -1,6 +1,3 @@
-from shared.api.query import make_query
-
-
 def main() -> None:
     pass
 
