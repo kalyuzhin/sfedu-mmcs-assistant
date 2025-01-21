@@ -1,0 +1,8 @@
+openai
+SpeechRecognition
+gTTS
+pyaudio
+requests
+beautifulsoup4
+fastapi[standard]
+pydantic-settings
