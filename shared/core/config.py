@@ -16,5 +16,9 @@ class Settings(BaseSettings):
 
     EMBEDDING_MODEL: str = "text-embedding-3-small"
 
+    MILVUS_NAME: str
+
+    COLLECTION_NAME: str
+
 
 settings = Settings()

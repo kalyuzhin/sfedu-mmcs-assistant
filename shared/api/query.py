@@ -1,7 +1,8 @@
 from shared.api import client, settings
 
 
-def make_query(query: str, context: str = None):
+def make_query(query: str, context: list[str] = None) -> str:
+    output = ""
     response = client.chat.completions.create(
         messages=[
             {"role": "system",
@@ -11,7 +12,10 @@ def make_query(query: str, context: str = None):
             {
                 "role": "user",
                 "content": f"""
-                Context: {context}
+                Context:
+                ``` 
+                {context}
+                ```
                 
                 Query: {query}""",
             }
@@ -22,4 +26,7 @@ def make_query(query: str, context: str = None):
 
     for update in response:
         if update.choices[0].delta.content:
+            output += update.choices[0].delta.content
             print(update.choices[0].delta.content, end="")
+
+    return output
