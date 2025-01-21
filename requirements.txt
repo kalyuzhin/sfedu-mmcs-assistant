@@ -7,3 +7,5 @@ beautifulsoup4
 fastapi[standard]
 pydantic-settings
 fake-useragent
+pyttsx3
+pymilvus

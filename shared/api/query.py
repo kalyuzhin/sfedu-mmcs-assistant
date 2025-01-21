@@ -7,16 +7,19 @@ client = OpenAI(
 )
 
 
-def make_query():
+def make_query(query: str, context: str = None):
     response = client.chat.completions.create(
         messages=[
-            {
-                "role": "system",
-                "content": "",
-            },
+            {"role": "system",
+             "content": """
+             Human: You are an AI assistant. You are able to find answers to the questions from the contextual 
+             passage snippets provided."""},
             {
                 "role": "user",
-                "content": "",
+                "content": f"""
+                Context: {context}
+                
+                Query: {query}""",
             }
         ],
         model=settings.MODEL_NAME,

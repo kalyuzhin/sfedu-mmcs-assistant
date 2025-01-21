@@ -1,4 +1,5 @@
 import speech_recognition as sr
+import pyttsx3
 
 recognizer = sr.Recognizer()
 microphone = sr.Microphone()
@@ -18,3 +19,11 @@ def recognize_speech() -> str:
         except sr.UnknownValueError:
             print("Не получилось обработать аудио")
     return data
+
+
+def synthesize_speech(text: str):
+    engine = pyttsx3.init()
+    engine.setProperty('volume', 1.0)
+    engine.setProperty("rate", 180)
+    engine.say(text)
+    engine.runAndWait()

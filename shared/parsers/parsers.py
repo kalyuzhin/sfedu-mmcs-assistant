@@ -11,7 +11,7 @@ def generate_headers() -> dict[str, str]:
     return headers
 
 
-def parse_mmcs(url: str) -> None:
+def parse_mmcs(url: str, filename: str = "adm") -> None:
     headers = generate_headers()
     response = requests.get(url, headers=headers)
     soup = BeautifulSoup(response.text, "html.parser")
@@ -22,5 +22,5 @@ def parse_mmcs(url: str) -> None:
             concatenated += "\n"
         if item.text is not None and item.text != "" and len(item.text) > 5:
             concatenated += f" {item.text}"
-    with open("./data/adm_achievements.md", 'w') as file:
+    with open(f"./data/{filename}.md", 'w') as file:
         file.write(concatenated)
