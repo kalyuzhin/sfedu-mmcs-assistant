@@ -10,7 +10,7 @@ milvus_client = MilvusClient(uri=settings.MILVUS_NAME)
 
 def create_collection() -> None:
     milvus_client.create_collection(collection_name=settings.COLLECTION_NAME,
-                                    dimension=1536,
+                                    dimension=3072,
                                     metric_type="IP",
                                     )
 
@@ -19,7 +19,7 @@ def fill_embeddings(lines: list[str], collection_name: str = settings.COLLECTION
     data = []
     for i, line in enumerate(tqdm(lines, desc="Creating embeddings")):
         data.append({"id": i, "vector": create_embeddings(line), "text": line})
-        time.sleep(5)
+        time.sleep(2)
     milvus_client.insert(collection_name=collection_name, data=data)
 
 
