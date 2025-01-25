@@ -1,4 +1,5 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from typing import Literal
 
 
 class Settings(BaseSettings):
@@ -19,6 +20,10 @@ class Settings(BaseSettings):
     MILVUS_NAME: str
 
     COLLECTION_NAME: str
+
+    PROJECT_NAME: str
+
+    ENVIRONMENT: Literal["production", "development"] = "development"
 
 
 settings = Settings()
