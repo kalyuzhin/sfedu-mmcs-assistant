@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from shared.backend.app.api.routes import rag
+from backend.app.api.routes import rag
 
 api_router = APIRouter()
 

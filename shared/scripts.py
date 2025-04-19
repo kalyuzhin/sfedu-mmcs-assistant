@@ -1,8 +1,10 @@
+import os
 import asyncio
 import pygame
 import requests
 import speech_recognition as sr
-from shared.core.config import settings
+
+SBER_TOKEN = os.environ['SBER_TOKEN']
 
 
 async def process_tasks_by_batches(data: list, batch_size: int, func) -> list:
@@ -22,7 +24,7 @@ def get_sber_token() -> str:
         "Content-Type": "application/x-www-form-urlencoded",
         "Accept": "application/json",
         "RqUID": "0b845cf3-969c-4cc1-b852-11819f93709c",
-        "Authorization": f"Basic {settings.SBER_TOKEN}"
+        "Authorization": f"Basic {SBER_TOKEN}"
     }
 
     return requests.post(url, headers=headers, data=payload).text

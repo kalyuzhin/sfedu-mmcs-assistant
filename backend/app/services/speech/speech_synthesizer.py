@@ -2,7 +2,7 @@ import io
 import pyttsx3
 import requests
 
-from shared.api import settings
+from backend.app.services.api import settings
 from gtts import gTTS
 
 
@@ -41,5 +41,3 @@ class SpeechSynthesizer:
         engine.setProperty("rate", 200)
         engine.say(text)
         engine.runAndWait()
-
-

@@ -8,6 +8,9 @@ class Settings(BaseSettings):
         env_ignore_empty=True,
         extra='ignore',
     )
+    # HTTP
+    HOST: str = '0.0.0.0'
+    PORT: int = 8080
 
     # OpenAI
     OPENAI_TOKEN: str

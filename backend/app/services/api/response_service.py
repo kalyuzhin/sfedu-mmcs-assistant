@@ -1,5 +1,5 @@
 from openai import OpenAI
-from shared.api import settings
+from backend.app.services.api import settings
 
 
 class ResponseService:

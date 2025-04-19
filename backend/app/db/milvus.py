@@ -6,8 +6,8 @@ from tqdm import tqdm
 from typing import List, Dict
 from pymilvus import MilvusClient
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from shared.api.embeddings import create_embeddings
-from shared.api import settings
+from backend.app.services.api.embeddings import create_embeddings
+from backend.app.services.api import settings
 
 
 class Milvus:
@@ -23,6 +23,21 @@ class Milvus:
                                       dimension=dimension,
                                       metric_type=metric_type,
                                       )
+        index_params = self.client.prepare_index_params()
+        index_params.add_index(
+            field_name="vector",
+            index_type="IVF_FLAT",
+            metric_type=metric_type,
+            params={
+                "M": 16,
+                "efConstruction": 40
+            }
+        )
+        self.client.create_index(
+            collection_name=collection_name,
+            index_params=index_params,
+        )
+        # self.client.load_collection(collection_name=collection_name)
 
     @staticmethod
     def get_data(data_path: str) -> str:
@@ -33,7 +48,7 @@ class Milvus:
         return text
 
     @staticmethod
-    def split_into_chunks(document: str, chunk_size: int = 500, chunk_overlap: int = 300) -> List[str]:
+    def split_into_chunks(document: str, chunk_size: int = 300, chunk_overlap: int = 100) -> List[str]:
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size,
                                                        chunk_overlap=chunk_overlap,
                                                        length_function=len,
@@ -56,7 +71,7 @@ class Milvus:
     def search_vectors(self, query: str, collection_name: str,
                        search_params: Dict[str, str] = None) -> str:
         if search_params is None:
-            search_params = {"metric_type": "IP", "params": {}}
+            search_params = {"metric_type": "IP", "params": {"ef": 40}}
         search_result = self.client.search(
             collection_name=collection_name,
             data=[

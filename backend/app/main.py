@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from shared.core.config import settings
-from shared.backend.app.api.main import api_router
+from backend.app.core.config import settings
+from backend.app.api.main import api_router
 
 app = FastAPI(title=settings.PROJECT_NAME)
 
