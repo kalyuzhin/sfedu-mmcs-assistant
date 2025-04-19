@@ -4,7 +4,7 @@ from glob import glob
 from tqdm import tqdm
 from typing import List, Dict
 from pymilvus import MilvusClient
-from langchain.text_splitter import TextSplitter
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 from shared.api.embeddings import create_embeddings
 
 
@@ -28,7 +28,10 @@ class Milvus:
 
     @staticmethod
     def split_into_chunks(self, document: str, chunk_size: int, chunk_overlap: int) -> List[str]:
-        text_splitter = TextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap, length_function=len)
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size,
+                                                       chunk_overlap=chunk_overlap,
+                                                       length_function=len,
+                                                       separators=['\n\n', '\n', ' ', '. '])
         chunks = []
         chunks.extend(text_splitter.split_text(document))
 
