@@ -1,8 +1,9 @@
 import uvicorn
+from shared.backend.app.core.config import settings
 
 
 def main() -> None:
-    uvicorn.run("backend.main:app", host="0.0.0.0", port=9000, reload=True)
+    uvicorn.run("shared.backend.app.main:app", host=settings.HOST, port=settings.PORT, reload=True)
 
 
 if __name__ == "__main__":

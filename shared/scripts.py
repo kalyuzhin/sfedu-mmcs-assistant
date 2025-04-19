@@ -1,4 +1,5 @@
 import asyncio
+import pygame
 import requests
 import speech_recognition as sr
 from shared.core.config import settings
@@ -39,3 +40,10 @@ def write_audio(filename: str = "test.wav"):
             raise e
     with open(filename, 'wb') as f:
         f.write(audio.get_wav_data())
+
+
+def play_audio(filename: str) -> None:
+    pygame.init()
+    pygame.mixer.music.load(filename)
+    pygame.mixer.music.play()
+    pygame.event.wait()

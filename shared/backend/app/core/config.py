@@ -12,4 +12,7 @@ class Settings(BaseSettings):
     HOST: str = '0.0.0.0'
     PORT: int = 9000
 
-    ENVIRONMENT: Literal['dev', 'test', 'prod'] = 'dev'
+    ENVIRONMENT: Literal["production", "development", 'test'] = 'dev'
+
+
+settings = Settings()

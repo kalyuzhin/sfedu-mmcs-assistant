@@ -1,6 +1,6 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from fastapi.responses import Response
-from backend.models import QueryRequest
+from shared.backend.app.models import QueryRequest
 from shared.app import App
 
 router = APIRouter(prefix="/rag", tags=["rag"])
@@ -52,4 +52,5 @@ async def process(audio: UploadFile = File(...)):
 
         return Response(content=_bytes, media_type="audio/mpeg")
     except Exception as ex:
+        print(str(ex))
         raise HTTPException(status_code=500, detail=str(ex))

@@ -1,7 +1,7 @@
+tqdm
 openai
 SpeechRecognition
 gTTS
-pyaudio
 requests
 beautifulsoup4
 fastapi[standard]
@@ -10,6 +10,6 @@ pydantic-settings
 fake-useragent
 pyttsx3
 pymilvus
-pygame
 langchain
 langchain-community
+uvicorn

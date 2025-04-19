@@ -1,5 +1,4 @@
 import io
-import pygame
 import pyttsx3
 import requests
 
@@ -43,9 +42,4 @@ class SpeechSynthesizer:
         engine.say(text)
         engine.runAndWait()
 
-    @staticmethod
-    def play_audio(filename: str) -> None:
-        pygame.init()
-        pygame.mixer.music.load(filename)
-        pygame.mixer.music.play()
-        pygame.event.wait()
+

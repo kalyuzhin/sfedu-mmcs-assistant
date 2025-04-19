@@ -1,1 +1,21 @@
 services:
+  api:
+    container_name: voice-assistant-mmcs-api
+    build:
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "${PORT:-8080}:${PORT:-8080}"
+    volumes:
+      - voice_assistant_mmcs_data:/app
+    command: [ "python3.12","main.py" ]
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
+
+volumes:
+  voice_assistant_mmcs_data: { }

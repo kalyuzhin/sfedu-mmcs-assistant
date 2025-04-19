@@ -5,3 +5,7 @@ __pycache__
 .vscode/
 *.env-example
 *.db
+*/parsers
+*/scripts.py
+*.out
+*.wav
