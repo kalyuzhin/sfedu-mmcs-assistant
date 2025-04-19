@@ -32,7 +32,7 @@ class ResponseService:
                 # stream=True,
                 temperature=0.5,
                 top_p=1.0,
-                max_tokens=2000,
+                max_tokens=1000,
             )
         except Exception as ex:
             return f"Ошибка запроса к LLM: {str(ex)}"
