@@ -1,3 +1,4 @@
+import io
 import pygame
 import pyttsx3
 import requests
@@ -11,12 +12,15 @@ class SpeechSynthesizer:
         pass
 
     @staticmethod
-    def synthesize_speech_gtts(self, text: str) -> None:
+    def synthesize_speech_gtts(text: str) -> bytes:
+        buffer = io.BytesIO()
         speech = gTTS(text=text, lang='ru', slow=False)
-        speech.save("output.mp3")
+        speech.write_to_fp(buffer)
+
+        return buffer.getvalue()
 
     @staticmethod
-    def synthesize_speech_salute(self, text: str) -> None:
+    def synthesize_speech_salute(text: str) -> None:
         headers = {
             'Content-Type': 'application/text',
             'Accept': 'audio/x-wav',
@@ -40,7 +44,7 @@ class SpeechSynthesizer:
         engine.runAndWait()
 
     @staticmethod
-    def play_audio(self, filename: str) -> None:
+    def play_audio(filename: str) -> None:
         pygame.init()
         pygame.mixer.music.load(filename)
         pygame.mixer.music.play()
