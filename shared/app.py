@@ -13,6 +13,3 @@ class App:
         self.response_service = ResponseService(client)
         self.intent_service = IntentService(client)
         self.db = Milvus(settings.MILVUS_NAME)
-
-    def startup(self):
-        pass

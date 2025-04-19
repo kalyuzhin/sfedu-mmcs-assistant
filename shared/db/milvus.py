@@ -6,11 +6,13 @@ from typing import List, Dict
 from pymilvus import MilvusClient
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from shared.api.embeddings import create_embeddings
+from shared.api import settings
 
 
 class Milvus:
     def __init__(self, uri: str) -> None:
         self.client = MilvusClient(uri=uri)
+        self.start()
 
     def create_collection(self, collection_name: str, dimension: int = 3072, metric_type: str = "IP") -> None:
         self.client.create_collection(collection_name=collection_name,
@@ -19,7 +21,7 @@ class Milvus:
                                       )
 
     @staticmethod
-    def get_data(self, data_path: str) -> str:
+    def get_data(data_path: str) -> str:
         for file_path in glob(f"{data_path}/*.txt", recursive=True):
             with open(file_path, "r") as file:
                 text = file.read()
@@ -27,7 +29,7 @@ class Milvus:
         return text
 
     @staticmethod
-    def split_into_chunks(self, document: str, chunk_size: int, chunk_overlap: int) -> List[str]:
+    def split_into_chunks(document: str, chunk_size: int = 500, chunk_overlap: int = 300) -> List[str]:
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size,
                                                        chunk_overlap=chunk_overlap,
                                                        length_function=len,
@@ -63,3 +65,11 @@ class Milvus:
         result = "\n".join([line_with_distance[0] for line_with_distance in retrieved_lines_with_distances])
 
         return result
+
+    def start(self):
+        if glob(f"*.db"):
+            return
+        self.create_collection(settings.COLLECTION_NAME)
+        text = self.get_data(settings.DATA_PATH)
+        chunks = self.split_into_chunks(text)
+        self.fill_embeddings(chunks, settings.COLLECTION_NAME)

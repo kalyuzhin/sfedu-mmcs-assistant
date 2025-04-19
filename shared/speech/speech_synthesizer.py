@@ -20,7 +20,7 @@ class SpeechSynthesizer:
         return buffer.getvalue()
 
     @staticmethod
-    def synthesize_speech_salute(text: str) -> None:
+    def synthesize_speech_salute(text: str) -> bytes:
         headers = {
             'Content-Type': 'application/text',
             'Accept': 'audio/x-wav',
@@ -31,9 +31,9 @@ class SpeechSynthesizer:
         if resp.status_code != 200:
             print("Status code not successful")
 
-            return
-        with open("file.wav", "wb") as f:
-            f.write(resp.content)
+            return b''
+
+        return resp.content
 
     @staticmethod
     def synthesize_speech_pyttsx(text: str) -> None:
