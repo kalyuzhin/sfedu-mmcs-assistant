@@ -9,7 +9,7 @@ class Settings(BaseSettings):
         extra='ignore',
     )
 
-    API_TOKEN: str
+    OPENAI_TOKEN: str
 
     ENDPOINT: str
 
@@ -24,6 +24,12 @@ class Settings(BaseSettings):
     PROJECT_NAME: str
 
     ENVIRONMENT: Literal["production", "development"] = "development"
+
+    SBER_TOKEN: str
+
+    YANDEX_TOKEN: str
+
+    DEEPSEEK_TOKEN: str
 
 
 settings = Settings()

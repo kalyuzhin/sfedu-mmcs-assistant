@@ -9,3 +9,6 @@ pydantic-settings
 fake-useragent
 pyttsx3
 pymilvus
+pygame
+langchain
+langchain-community

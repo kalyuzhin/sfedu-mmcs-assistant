@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from typing import Any
 
-router = APIRouter(prefix="/api/rag", tags=["rag"])
+router = APIRouter(prefix="/api/v1/rag", tags=["rag"])
 
 
 @router.post("/")

@@ -9,7 +9,7 @@ def run():
     print(f"{query}")
     context = search_vectors(query)
     print(f"Контекст:\n{context}\n")
-    output = make_query(query, context)
+    output = make_query_ru(query, context)
     synthesize_speech_pyttsx(output)
     # synthesize_speech_gtts(output)
 

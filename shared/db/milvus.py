@@ -23,7 +23,7 @@ def fill_embeddings(lines: list[str], collection_name: str = settings.COLLECTION
     milvus_client.insert(collection_name=collection_name, data=data)
 
 
-def search_vectors(query: str):
+def     search_vectors(query: str):
     search_result = milvus_client.search(
         collection_name=settings.COLLECTION_NAME,
         data=[

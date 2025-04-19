@@ -2,7 +2,7 @@ from shared.api import client, settings
 
 
 def make_query(query: str, context: list[str] = None) -> str:
-    output = ""
+    output: str = ""
     response = client.chat.completions.create(
         messages=[
             {"role": "system",
@@ -16,14 +16,15 @@ def make_query(query: str, context: list[str] = None) -> str:
                 ``` 
                 {context}
                 ```
+                Task: make a relevant answer due to the provided context.
                 
                 Query: {query}""",
             }
         ],
         model=settings.MODEL_NAME,
-        temperature=1.0,
+        temperature=0.5,
         top_p=1.0,
-        max_tokens=1000,
+        max_tokens=2000,
         # stream=True,
     )
     print("Ответ: \n")
@@ -34,29 +35,30 @@ def make_query(query: str, context: list[str] = None) -> str:
     #         print(update.choices[0].delta.content, end="")
     output = response.choices[0].message.content
     print(output)
+
     return output
 
 
 def make_query_ru(query: str, context: list[str] = None) -> str:
-    output = ""
+    output: str = ""
     response = client.chat.completions.create(
         messages=[
             {
                 "role": "user",
                 "content": f"""
-                На основе следующего контекста, ответьте на запрос:
+                Контекст:
                 ``` 
                 {context}
                 ```
-
+                Задача: Извлеки ключевые слова из запроса. Не отвечай ни на что другое, кроме ключевых слов.
                 Запрос: {query}""",
             }
         ],
         model=settings.MODEL_NAME,
         # stream=True,
-        temperature=1.0,
+        temperature=0.5,
         top_p=1.0,
-        max_tokens=1000,
+        max_tokens=2000,
     )
     print("Ответ: \n")
 
@@ -66,4 +68,5 @@ def make_query_ru(query: str, context: list[str] = None) -> str:
     #         print(update.choices[0].delta.content, end="")
     output = response.choices[0].message.content
     print(output)
+
     return output
