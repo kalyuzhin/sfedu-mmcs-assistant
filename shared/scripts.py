@@ -8,12 +8,3 @@ async def process_tasks_by_batches(data: list, batch_size: int, func) -> list:
         batch = data[i:i + batch_size]
         result.extend(await asyncio.gather(*(func(item) for item in batch)))
     return result
-
-
-def get_data(data_dir: str = "./data/") -> list[str]:
-    text_lines: list[str] = []
-    for file_path in glob(f"{data_dir}/*.md", recursive=True):
-        with open(file_path, "r") as file:
-            text = file.read()
-        text_lines += text.split("\n")
-    return text_lines

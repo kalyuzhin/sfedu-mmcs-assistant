@@ -1,4 +1,4 @@
-from shared.speech.speech import recognize_speech_sr, synthesize_speech_pyttsx, synthesize_speech_gtts
+from shared.speech.speech_recognizer import recognize_speech_sr, synthesize_speech_pyttsx, synthesize_speech_gtts
 from shared.api.query import make_query, make_query_ru
 from shared.db.milvus import search_vectors
 
