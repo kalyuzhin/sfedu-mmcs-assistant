@@ -44,7 +44,10 @@ class Milvus:
             time.sleep(2)
         self.client.insert(collection_name=collection_name, data=data)
 
-    def search_vectors(self, query: str, collection_name: str, search_params: Dict[str, str]) -> str:
+    def search_vectors(self, query: str, collection_name: str,
+                       search_params: Dict[str, str] = None) -> str:
+        if search_params is None:
+            search_params = {"metric_type": "IP", "params": {}}
         search_result = self.client.search(
             collection_name=collection_name,
             data=[

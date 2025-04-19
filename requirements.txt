@@ -5,6 +5,7 @@ pyaudio
 requests
 beautifulsoup4
 fastapi[standard]
+pydantic
 pydantic-settings
 fake-useragent
 pyttsx3

@@ -1,5 +1,5 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from typing import Literal
+from typing import Literal, Optional
 
 
 class Settings(BaseSettings):
@@ -16,14 +16,14 @@ class Settings(BaseSettings):
     EMBEDDING_MODEL: str = "text-embedding-3-small"
 
     # SBER
-    SBER_TOKEN: str
-    SYNTHESIZE_SBER_ENDPOINT: str
-    RECOGNIZE_SBER_ENDPOINT: str
+    SBER_TOKEN: str = None
+    SYNTHESIZE_SBER_ENDPOINT: Optional[str] = None
+    RECOGNIZE_SBER_ENDPOINT: Optional[str] = None
     CERTS: str
 
     # Tokens
-    YANDEX_TOKEN: str
-    DEEPSEEK_TOKEN: str
+    YANDEX_TOKEN: Optional[str] = None
+    DEEPSEEK_TOKEN: Optional[str] = None
 
     # Database
     MILVUS_NAME: str
@@ -32,7 +32,7 @@ class Settings(BaseSettings):
     DATA_PATH: str = "./data"
 
     # Other
-    ENVIRONMENT: Literal["production", "development"] = "development"
+    ENVIRONMENT: Literal["production", "development", 'test'] = "development"
 
 
 settings = Settings()

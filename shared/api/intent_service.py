@@ -14,7 +14,8 @@ class IntentService:
                      "content": f"""
                  Задача: Извлеки ключевые слова из следующего вопроса. Не отвечай ни на что другое, кроме ключевых слов.
                  Вопрос: {user_question}"""}
-                ])
+                ],
+                max_tokens=100)
         except Exception as ex:
             return f"Ошибка запроса к LLM: {str(ex)}"
 
