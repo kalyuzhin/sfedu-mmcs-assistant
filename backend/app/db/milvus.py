@@ -6,8 +6,8 @@ from tqdm import tqdm
 from typing import List, Dict
 from pymilvus import MilvusClient
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from backend.app.services.api.embeddings import create_embeddings
-from backend.app.services.api import settings
+from app.services.api.embeddings import create_embeddings
+from app.services.api import settings
 
 
 class Milvus:

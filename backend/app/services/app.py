@@ -1,9 +1,9 @@
-from backend.app.services.speech.speech_synthesizer import SpeechSynthesizer
-from backend.app.services.speech.speech_recognizer import SpeechRecognizer
-from backend.app.services.api.response_service import ResponseService
-from backend.app.services.api.intent_service import IntentService
-from backend.app.db.milvus import Milvus
-from backend.app.services.api import client, settings
+from app.services.speech.speech_synthesizer import SpeechSynthesizer
+from app.services.speech.speech_recognizer import SpeechRecognizer
+from app.services.api.response_service import ResponseService
+from app.services.api.intent_service import IntentService
+from app.db.milvus import Milvus
+from app.services.api import client, settings
 
 
 class App:

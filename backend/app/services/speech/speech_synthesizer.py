@@ -2,7 +2,7 @@ import io
 import pyttsx3
 import requests
 
-from backend.app.services.api import settings
+from app.services.api import settings
 from gtts import gTTS
 
 

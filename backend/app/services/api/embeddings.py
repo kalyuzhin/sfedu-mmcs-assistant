@@ -1,5 +1,5 @@
 from typing import List
-from backend.app.services.api import client, settings
+from app.services.api import client, settings
 
 
 def create_embeddings(text: str) -> List[float]:

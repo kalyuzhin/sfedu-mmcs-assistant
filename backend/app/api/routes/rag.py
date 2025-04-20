@@ -1,7 +1,7 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from fastapi.responses import Response
-from backend.app.models import QueryRequest
-from backend.app.services.app import App
+from app.models import QueryRequest
+from app.services.app import App
 
 router = APIRouter(prefix="/rag", tags=["rag"])
 app = App()
