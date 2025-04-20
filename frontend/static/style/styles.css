@@ -1,0 +1,107 @@
+:root{
+    --blue: #1D4992;
+    --gradient: -webkit-linear-gradient(var(--blue), #fff);
+}
+
+body, h1, h2, h3, h4, h5, img, p, a, ul, ol, li, button{
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    color: var(--blue);
+    border: none;
+}
+
+body {
+    padding-top:25px;
+    font-family: Arial, sans-serif;
+    color: rgb(29,73,146);
+    background: var(--gradient);
+    background-attachment: fixed;
+}
+
+img{
+    display:block;
+}
+
+.container{
+    width:90%;
+    margin:0 auto;
+}
+
+.header-logo{
+    width:10%;
+}
+
+.page-main{
+    margin-top:100px;
+}
+
+.page-main .container{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.start-btn {
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgb(29,73,146) 0%, rgb(52, 120, 224) 100%);
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: block;
+}
+
+.start-btn-content{
+    align-items: center;
+    text-align: center;
+    color: white;
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.status-text {
+    font-size: 24px;
+    margin-top: 30px;
+    font-weight: 500;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .start-btn {
+      width: 250px;
+      height: 250px;
+    }
+    .start-btn-content{
+        font-size: 36px;
+    }
+    .status-text{
+        font-size: 20px;
+    }
+  }
+  
+@media (max-width: 480px) {
+    .start-btn {
+      width: 180px;
+      height: 180px; 
+    }
+    .start-btn-content{
+        font-size: 28px;
+        font-weight: 500;
+    }
+    .status-text{
+        font-size: 18px;
+    }
+}
+
+.start-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.start-btn:active {
+    transform: scale(0.95);
+}
