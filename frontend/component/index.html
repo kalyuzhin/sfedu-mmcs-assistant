@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/style/styles.css">
+    <title>Помощник МехМата</title>
+</head>
+<body>
+<header class="page-header">
+    <div class="container">
+        <img class="header-logo" src="static/img/image.png" alt="Логотип ЮФУ">
+    </div>
+</header>
+
+<main class="page-main">
+    <div class="container">
+        <button class="start-btn">
+                <span class="start-btn-content">
+                    Начать
+                </span>
+        </button>
+        <div class="status-text">Нажмите чтобы начать</div>
+    </div>
+</main>
+
+<footer class="page-footer">
+    <div class="container">
+
+    </div>
+</footer>
+<script>
+    const micButton = document.getElementsByClassName('start-btn')[0];
+    const statusText = document.getElementsByClassName('status-text')[0];
+    const micButtonContent = document.getElementsByClassName('start-btn-content')[0];
+    let isListening = false;
+    
+    micButton.addEventListener('click', () => {
+        isListening = !isListening;
+        micButton.classList.toggle('pulse', isListening);
+        statusText.textContent = isListening ? 'Слушаю...' : 'Нажмите чтобы начать';
+        micButtonContent.textContent = isListening ? "" : "Начать";
+    });
+</script>
+</body>
+</html

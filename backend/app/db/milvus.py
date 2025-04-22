@@ -1,12 +1,15 @@
 import os
 import time
+import random
+import requests
 
 from glob import glob
 from tqdm import tqdm
 from typing import List, Dict
 from pymilvus import MilvusClient
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from app.services.api.embeddings import create_embeddings
+from langchain.text_splitter import RecursiveCharacterTextSplitter, MarkdownTextSplitter
+from langchain_community.document_loaders import DirectoryLoader
+from app.services.api.embeddings import create_embeddings_openai, create_embeddings_hf
 from app.services.api import settings
 
 
@@ -18,7 +21,7 @@ class Milvus:
             self.client = MilvusClient(uri=uri)
             self.start()
 
-    def create_collection(self, collection_name: str, dimension: int = 3072, metric_type: str = "IP") -> None:
+    def create_collection(self, collection_name: str, dimension: int = 384, metric_type: str = "IP") -> None:
         self.client.create_collection(collection_name=collection_name,
                                       dimension=dimension,
                                       metric_type=metric_type,
@@ -48,24 +51,45 @@ class Milvus:
         return text
 
     @staticmethod
-    def split_into_chunks(document: str, chunk_size: int = 300, chunk_overlap: int = 100) -> List[str]:
+    def split_into_chunks(document: str, chunk_size: int = 600, chunk_overlap: int = 100) -> List[str]:
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size,
                                                        chunk_overlap=chunk_overlap,
                                                        length_function=len,
-                                                       separators=['\n\n', '\n', ' ', '. '])
+                                                       separators=['\n\n', '\n', ' '])
         chunks = []
         chunks.extend(text_splitter.split_text(document))
+
+        return chunks
+
+    @staticmethod
+    def split_mds() -> List[str]:
+        loader = DirectoryLoader(path=settings.DATA_PATH, glob='*.md')
+        documents = loader.load()
+        chunks: List[str] = []
+        text_splitter = MarkdownTextSplitter(chunk_size=800, chunk_overlap=160, length_function=len)
+        for doc in documents:
+            chunks.extend(text_splitter.split_text(doc.page_content))
+        print(f'{len(chunks)} chunks have been created')
 
         return chunks
 
     def fill_embeddings(self, lines: List[str], collection_name: str) -> None:
         data: List[Dict[str, List[float] | int | str]] = []
         try:
-            for i, line in enumerate(tqdm(lines, desc="Creating embeddings")):
-                data.append({"id": i, "vector": create_embeddings(line), "text": line})
-                time.sleep(1)
+            for i, line in enumerate(lines):
+                print(i)
+                data.append({"id": i, "vector": create_embeddings_openai(line), "text": line})
+                time.sleep(1 + random.random())
         except Exception as e:
             raise e
+        finally:
+            self.client.insert(collection_name=collection_name, data=data)
+
+    def fill_embeddings_hf(self, lines: List[str], collection_name: str) -> None:
+        embs = create_embeddings_hf(lines)
+        data: List[Dict[str, List[float] | int | str]] = []
+        for i, emb in enumerate(embs):
+            data.append({"id": i, "vector": emb, "text": lines[i]})
         self.client.insert(collection_name=collection_name, data=data)
 
     def search_vectors(self, query: str, collection_name: str,
@@ -75,7 +99,7 @@ class Milvus:
         search_result = self.client.search(
             collection_name=collection_name,
             data=[
-                create_embeddings(query)
+                create_embeddings_hf(query)
             ],
             limit=3,
             search_params=search_params,
@@ -90,6 +114,5 @@ class Milvus:
 
     def start(self):
         self.create_collection(settings.COLLECTION_NAME)
-        text = self.get_data(settings.DATA_PATH)
-        chunks = self.split_into_chunks(text)
-        self.fill_embeddings(chunks, settings.COLLECTION_NAME)
+        chunks = self.split_mds()
+        self.fill_embeddings_hf(chunks, settings.COLLECTION_NAME)

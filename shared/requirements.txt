@@ -3,3 +3,4 @@ pyaudio
 requests
 beautifulsoup4
 fake-useragent
+python-dotenv

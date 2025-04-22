@@ -4,7 +4,11 @@ import pygame
 import requests
 import speech_recognition as sr
 
-SBER_TOKEN = os.environ['SBER_TOKEN']
+from dotenv import load_dotenv
+
+load_dotenv()
+
+SBER_TOKEN = os.getenv("SBER_TOKEN")
 
 
 async def process_tasks_by_batches(data: list, batch_size: int, func) -> list:
@@ -30,7 +34,7 @@ def get_sber_token() -> str:
     return requests.post(url, headers=headers, data=payload).text
 
 
-def write_audio(filename: str = "test.wav"):
+def write_audio() -> bytes:
     microphone = sr.Microphone()
     recognizer = sr.Recognizer()
     with microphone:
@@ -40,12 +44,13 @@ def write_audio(filename: str = "test.wav"):
             audio = recognizer.listen(microphone)
         except sr.WaitTimeoutError as e:
             raise e
-    with open(filename, 'wb') as f:
-        f.write(audio.get_wav_data())
+
+    return audio.get_wav_data()
 
 
 def play_audio(filename: str) -> None:
     pygame.init()
     pygame.mixer.music.load(filename)
     pygame.mixer.music.play()
-    pygame.event.wait()
+    while pygame.mixer.music.get_busy():
+        pygame.time.Clock().tick(10)

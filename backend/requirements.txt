@@ -1,4 +1,3 @@
-tqdm
 openai
 SpeechRecognition
 gTTS
@@ -11,3 +10,6 @@ pymilvus
 langchain
 langchain-community
 uvicorn
+unstructured
+unstructured[md]
+pydub

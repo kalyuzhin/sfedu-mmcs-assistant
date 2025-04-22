@@ -36,6 +36,7 @@ class Settings(BaseSettings):
 
     # Other
     ENVIRONMENT: Literal["production", "development", 'test'] = "development"
+    HF_TOKEN: Optional[str] = None
 
 
 settings = Settings()
