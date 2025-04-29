@@ -1,5 +1,7 @@
 from openai import OpenAI
 
+from app.services.api import settings
+
 
 class IntentService:
     def __init__(self, client: OpenAI):
@@ -8,7 +10,7 @@ class IntentService:
     def get_intent(self, user_question: str) -> str:
         try:
             response = self.client.chat.completions.create(
-                model="gpt-4o-mini",
+                model=settings.MODEL_NAME,
                 messages=[
                     {"role": "user",
                      "content": f"""

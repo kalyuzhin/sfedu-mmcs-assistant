@@ -43,14 +43,24 @@ async def synthesize(request: QueryRequest):
 @router.post("/process")
 async def process(audio: UploadFile = File(...)):
     try:
+        headers = {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type"
+        }
         content = await audio.read()
-        text = app.recognizer.recognize_speech_bytes(content)
-        intent = app.intent_service.get_intent(text)
-        context = app.db.search_vectors(intent, "mmcs_data")
+        text = app.recognizer.recognize_speech_salute(content)
+        if len(str(text).split()) < 3 and len(str(audio).split()) != 0:
+            context = app.db.search_vectors(text, "mmcs_data")
+        elif len(str(text).split()) >= 3:
+            intent = app.intent_service.get_intent(text)
+            context = app.db.search_vectors(intent, "mmcs_data")
+        else:
+            context = ''
         response_text = app.response_service.make_response(context, text)
-        _bytes = app.synthesizer.synthesize_speech_gtts(response_text)
+        _bytes = app.synthesizer.synthesize_speech_salute(response_text)
 
-        return Response(content=_bytes, media_type="audio/wave")
+        return Response(content=_bytes, media_type="audio/wave", headers=headers)
     except Exception as ex:
         print(str(ex))
         raise HTTPException(status_code=500, detail=str(ex))

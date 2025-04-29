@@ -1,6 +1,9 @@
 import io
 import wave
+import requests
 import speech_recognition as sr
+
+from app.services.api import settings
 
 
 class SpeechRecognizer:
@@ -21,3 +24,17 @@ class SpeechRecognizer:
             raise RuntimeError(f"Ошибка сервиса распознавания: {e}")
 
         return text
+
+    @staticmethod
+    def recognize_speech_salute(_bytes: bytes) -> str:
+        headers = {
+            'Content-Type': 'audio/ogg;codecs=opus',
+            'Accept': 'application/json',
+            'Authorization': f'Bearer {settings.SBER_TOKEN}'
+        }
+        url = "https://smartspeech.sber.ru/rest/v1/speech:recognize?language=ru-RU"
+        resp = requests.post(url, headers=headers, data=_bytes, verify=settings.CERTS)
+        if resp.status_code != 200:
+            raise BaseException(resp.text)
+
+        return resp.json()['result']

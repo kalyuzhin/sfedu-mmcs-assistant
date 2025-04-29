@@ -29,18 +29,6 @@
 
     </div>
 </footer>
-<script>
-    const micButton = document.getElementsByClassName('start-btn')[0];
-    const statusText = document.getElementsByClassName('status-text')[0];
-    const micButtonContent = document.getElementsByClassName('start-btn-content')[0];
-    let isListening = false;
-    
-    micButton.addEventListener('click', () => {
-        isListening = !isListening;
-        micButton.classList.toggle('pulse', isListening);
-        statusText.textContent = isListening ? 'Слушаю...' : 'Нажмите чтобы начать';
-        micButtonContent.textContent = isListening ? "" : "Начать";
-    });
-</script>
+<script src="static/src/script.js"></script>
 </body>
-</html
+</html>
